@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+#Account name to run under
+#SBATCH-A <account>
+#
+#Job name
+#SBATCH -J scale_trees_up
+#
+#Request time for completion
+#SBATCH -t 00:05:00
+#
+#Request number of cores needed
+#SBATCH -n 1
+
+#Clear environment of previous modules
+module purge>/dev/null 2>&1
+
+source activate myEnv
+for i in $(seq 10) do
+	python Random_Forest_All_Cores.py (i*100)
+done

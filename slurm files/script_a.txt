@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+#Account name to run under
+#SBATCH-A <account>
+#
+#Job name
+#SBATCH -J run_3_parallel
+#
+#Request time for completion
+#SBATCH -t 00:30:00
+#
+#Request number of cores needed
+#SBATCH -n 3
+
+#Clear environment of previous modules
+module purge>/dev/null 2>&1
+
+source activate meEnv
+srun -n 1 --cpu_bind=cores python Random_Forest_All_Cores.py &
+srun -n 1 --cpu_bind=cores python SIR_N_scale_model.py &
+srun -n 1 --cpu_bind=cores python SMD_N_body_system.py &
+
+wait

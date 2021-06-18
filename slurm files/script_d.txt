@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+#Account name to run under
+#SBATCH-A <account>
+#
+#Job name
+#SBATCH -J scale_SIR_system
+#
+#Request time for completion
+#SBATCH -t 00:10:00
+#
+#Request number of cores needed
+#SBATCH -n 1
+
+#Clear environment of previous modules
+module purge>/dev/null 2>&1
+
+source activate myEnv
+for i in $(seq 11) do
+	python SIR_N_scale_model.py (i*0.05-0.05) (i*0.03333-0.3333)
+done
